@@ -1,16 +1,50 @@
-# React + Vite
+# EventSpahare-Frontend
+https://github.com/Rima-Tasneem/EventSpahare-Fontend.git
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Technologies Used
 
-Currently, two official plugins are available:
+- React.js
+- JavaScript
+- HTML5
+- CSS3
+- Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
--https://github.com/Rima-Tasneem/EventSpahare-Fontend.git
+## 📦 Installation
 
-## React Compiler
+1. Clone the repository:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+   ```bash
+   git clone https://github.com/Rima-Tasneem/EventSpahare-Fontend.git
+   ```
 
-## Expanding the ESLint configuration
+2. Navigate to the project folder:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+   ```bash
+   cd EventSpahare-Fontend
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+## 👩‍💻 Developer
+
+**Rima Tasneem**
+
+GitHub: [Rima-Tasneem](https://github.com/Rima-Tasneem)
+
+## 🌐 My Other Projects
+
+- [Recipe Project](https://github.com/Rima-Tasneem/Recipe-project)
+
+---
+
+⭐ Thank you for visiting my repository!
