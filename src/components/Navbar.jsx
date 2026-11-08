@@ -1,22 +1,23 @@
-//  import { Bookmark, Calendar, Compass, Sparkles, User } from "lucide-react";
-import{
+import {
   Bookmark,
-  Calender,
+  Calendar,
   Compass,
+  Menu,
   PlusCircle,
   Search,
   Sparkles,
   User,
   X,
-} from "lucide-react"
+} from "lucide-react";
 import { Link } from "react-router";
 import { Button } from "./ui/button";
 import { useState } from "react";
 
 function Navbar() {
-  const[isMobileMenuOpen,setIsMobileMenuOpen]=useState(false);
-  // console.log(isMobileMenuOpen)
-   return (
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  console.log(isMobileMenuOpen);
+
+  return (
     <div className="sticky top-0 z-4 w-full bg-[#FAF9F5]/90 backdrop-blur-md border-b border-[#EBE8DF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-18">
         <div className="flex gap-4">
