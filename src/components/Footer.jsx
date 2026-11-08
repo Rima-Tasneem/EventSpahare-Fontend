@@ -1,7 +1,6 @@
-import React from 'react'
-import {Link} from "react-router";
+import React from "react";
+import { Link } from "react-router";
 import { Sparkles, ShieldCheck } from "lucide-react";
-
 
 export function Footer() {
   return (
@@ -141,6 +140,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
+
 export default Footer;
