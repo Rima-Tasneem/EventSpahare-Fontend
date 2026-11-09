@@ -10,15 +10,14 @@ import {
   X,
 } from "lucide-react";
 import { Link } from "react-router";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  console.log(isMobileMenuOpen);
-
+  
   return (
-    <div className="sticky top-0 z-4 w-full bg-[#FAF9F5]/90 backdrop-blur-md border-b border-[#EBE8DF]">
+    <div className="sticky top-0 z-40 w-full bg-[#FAF9F5]/90 backdrop-blur-md border-b border-[#EBE8DF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-18">
         <div className="flex gap-4">
           <Link to="/" className="flex items-center gap-2.5 group">
@@ -175,7 +174,7 @@ function Navbar() {
               <PlusCircle className="w-4 h-4" /> Host an Event
             </Link>
           </div>
-          
+
           <div className="pt-2 flex flex-col gap-2">
             <div className="w-full py-2.5 px-4 text-xs font-semibold rounded-xl bg-stone-100 text-stone-600 border border-[#DDD9CE] text-center select-none shadow-xs">
               Sign In & Sign Up — Coming Soon
