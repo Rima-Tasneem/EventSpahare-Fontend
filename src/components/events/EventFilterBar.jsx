@@ -1,7 +1,14 @@
 import { useDebounce } from "@/hooks/useDebounce";
 import { useEventFilters } from "@/hooks/useEventFilters";
 import api from "@/lib/axios";
-import { Calendar, ChevronDown, MapPin, Search, X } from "lucide-react";
+import {
+  Calendar,
+  ChevronDown,
+  MapPin,
+  RotateCcw,
+  Search,
+  X,
+} from "lucide-react";
 import { memo, useEffect, useMemo, useState } from "react";
 
 const CITIES = [
@@ -20,7 +27,7 @@ const CITIES = [
 ];
 
 export const EventFilterBar = memo(() => {
-  const { updateParams, filters } = useEventFilters();
+  const { updateParams, filters, hasActiveFilters,resetFilters } = useEventFilters();
   const [categories, setCategories] = useState([]);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
   const [searchVal, setSearchVal] = useState(filters.search);
@@ -47,6 +54,11 @@ export const EventFilterBar = memo(() => {
   function clearSearch() {
     setSearchVal("");
     updateParams({ search: "" });
+  }
+
+  function handleSorting(e) {
+    const [sort, order] = e.target.value.split("_");
+    updateParams({ sort, order });
   }
 
   async function fetchCategories() {
@@ -119,7 +131,7 @@ export const EventFilterBar = memo(() => {
         <div className="relative min-w-37.5">
           <MapPin className="text-stone-400 absolute w-4 h-4 left-3 top-1/2 -translate-y-1/2 pointer-events-none text-xs" />
           <select
-          value={filters.city}
+            value={filters.city}
             name="city"
             onChange={(e) => handleChangeCity(e.target.value)}
             className="w-full pl-8 pr-7 py-2 text-xs font-medium rounded-xl bg-[#FAF9F5] border border-[#DDD9CE] focus:border-[#E65100] outline-none text-stone-800 appearance-none cursor-pointer"
@@ -153,25 +165,30 @@ export const EventFilterBar = memo(() => {
         <div className="relative min-w-35">
           <select
             name="sort"
+            onChange={handleSorting}
             className="w-full px-3 py-2 text-xs font-medium rounded-xl bg-[#FAF9F5] border border-[#DDD9CE] focus:border-[#E65100] outline-none text-stone-800 appearance-none cursor-pointer"
           >
-            <option value="startDate_asc">Earliest First</option>
-            <option value="startDate_desc">Latest First</option>
+            <option value="startDate_asc">Soonest first</option>
+            <option value="startDate_desc">Furthest out</option>
             <option value="price_asc">Price: Low to High</option>
             <option value="price_desc">Price: High to Low</option>
             <option value="title_asc">Title: A – Z</option>
+            <option value="title_desc">Title: Z – A</option>
           </select>
           <ChevronDown className="text-stone-400 w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-xs" />
         </div>
 
         {/* Reset Filters CTA */}
-        <button
-          type="button"
-          className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded-xl transition-colors shrink-0 cursor-pointer"
-        >
-          <span>🔄</span>
-          <span>Reset</span>
-        </button>
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded-xl transition-colors shrink-0 cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset</span>
+          </button>
+        )}
       </div>
 
       {/* Categories horizontal pill bar */}
