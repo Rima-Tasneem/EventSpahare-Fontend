@@ -15,6 +15,8 @@ export function useEventFilters() {
       city: searchParams.get("city") || "All",
       sort: searchParams.get("sort") || "startDate",
       order: searchParams.get("order") || "asc",
+      startDate :searchParams.get("startDate")||null,
+      endDate : searchParams.get("endDate")||null,
     };
   }, [searchParams]);
 
@@ -53,6 +55,12 @@ export function useEventFilters() {
     }
     if (filters.order) {
       params.set("order", String(filters.order));
+    }
+    if(filters.startDate){
+      params.set("startDate",filters.startDate)
+    }
+    if(filters.endDate){
+      params.set("endDate",filters.endDate)
     }
     return params.toString();
   }

@@ -1,6 +1,7 @@
 import { useDebounce } from "@/hooks/useDebounce";
 import { useEventFilters } from "@/hooks/useEventFilters";
 import api from "@/lib/axios";
+import{format,parseISO} from "date-fns";
 import {
   Calendar,
   ChevronDown,
@@ -36,7 +37,10 @@ export const EventFilterBar = memo(() => {
   const debouncedValue = useDebounce(searchVal, 350);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [calendarTab, setCalendarTab] = useState("dates");
-  const [range, setRange] = useState({ from: undefined, to: undefined });
+  const [range, setRange] = useState({
+    from:filters.startDate ? parseISO(filters.startDate):undefined,
+    to:filters.endDate ? parseISO(filters.endDate) : undefined,
+  });
   const isDebouncing = searchVal.trim() !== filters.search.trim();
   
   function handleFormatChange(format) {
@@ -65,9 +69,46 @@ export const EventFilterBar = memo(() => {
     updateParams({ sort, order });
   }
 
-  function handleRangeSelect(range, triggerDate) {
-    console.log({ range, triggerDate });
-    setRange(range)
+ function handleRangeSelect(_, triggerDate){
+  if(!triggerDate){
+    setRange({from:undefined,to:undefined});
+    updateParams({startDate: null,endDate:null});
+    return;
+  }
+  let clickedTime =new Date(triggerDate).getTime();//converted into timestamp
+  let fromTime = range.from ? new Date(range.from).getTime():undefined;
+  let toTime = range.to ? new Date (range.to).getTime() : undefined;
+  let hasRangeActive= Boolean(fromTime && toTime && fromTime !==toTime);
+
+  let nextRange;
+   // if (clickedTime === fromTime || clickedTime === toTime) {
+    //   // double click
+    //   nextRange = { from: triggerDate, to: triggerDate };
+    // } else if (clickedTime < fromTime) {
+    //   // clicked on past date -> reset
+    //   nextRange = { from: triggerDate, to: triggerDate };
+    // } else if (hasRangeActive) {
+    //   //if full range was active
+    //   nextRange = { from: triggerDate, to: triggerDate };
+    // } else if (clickedTime > fromTime) {
+    //   // clicked on future date -> select range
+    //   nextRange = { from: range.from, to: triggerDate };
+    // } else {
+    //   //inital/ single click
+    //   nextRange = { from: triggerDate, to: triggerDate };
+    // }
+    if(!hasRangeActive && clickedTime > fromTime){
+       // clicked on future date -> select range
+       nextRange={from: range.from, to: triggerDate};
+    }else{
+      //inital/ single click
+      nextRange = { from: triggerDate, to: triggerDate };
+    }
+    setRange(nextRange);
+    updateParams({
+      startDate: format(nextRange.from,"yyyy-MM-dd"),
+      endDate: format(nextRange.to, "yyyy-MM-dd"),
+    })
   }
 
   async function fetchCategories() {
@@ -317,7 +358,10 @@ export const EventFilterBar = memo(() => {
         {hasActiveFilters && (
           <button
             type="button"
-            onClick={resetFilters}
+            onClick={()=>{
+              resetFilters();
+              clearSearch();
+            }}
             className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded-xl transition-colors shrink-0 cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
